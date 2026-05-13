@@ -21,6 +21,7 @@ module Baudrate_generator #(parameter Clk_freq = 50_000_000,
   // Fix:
   always_ff @(posedge clk or negedge rst_n) begin
     if (!rst_n) counter_tx <= '0;    // known clean start 
+    else if (tx_start) counter_tx <= '0;     // resync counter to tx_start 
     else if (counter_tx == tx_cnt_val - 1) counter_tx <= '0;
     else counter_tx <= counter_tx + 1'b1;
   end
